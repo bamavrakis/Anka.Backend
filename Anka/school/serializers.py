@@ -23,6 +23,7 @@ class TeacherSerializer(serializers.Serializer):
     paternal_name = serializers.CharField(required=True, max_length=128)
     maternal_name = serializers.CharField(required=True, max_length=128)
     role = serializers.CharField(required=True, max_length=128)
+    mail = serializers.CharField(required=True, max_length=64)
 
 
 class CourseSerializer(serializers.Serializer):

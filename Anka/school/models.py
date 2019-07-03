@@ -27,6 +27,7 @@ class Teacher(AbstractUser):
     maternal_name = models.CharField(
         blank=True, null=True, max_length=LENGTH_128)
     role = models.CharField(blank=True, null=True, max_length=LENGTH_16)
+    mail = models.CharField(blank=True, null=True, max_length=LENGTH_64)
 
     class Meta:
         ordering = ('created',)

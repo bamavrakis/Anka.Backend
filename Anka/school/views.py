@@ -15,6 +15,8 @@ from .serializers import (UserSerializer, AttendanceSerializer,
                           StudentSerializer, CourseWorkerSerializer)
 import datetime
 import os
+from django.core.mail import send_mail, EmailMessage
+
 
 User = get_user_model()
 
@@ -108,7 +110,9 @@ class CheckAttendanceViewSet(viewsets.ModelViewSet):
 
 class ExportAttendanceViewSet(viewsets.ModelViewSet):
     def create(self, request):
+        print(request.data)
         course_id = request.data["courseId"]
+        print(course_id)
         wb = Workbook()
         ws = wb.active
         # Data can be assigned directly to cells
@@ -128,18 +132,26 @@ class ExportAttendanceViewSet(viewsets.ModelViewSet):
             ws[f"A{current_index}"] = student.rut_without_digit
             ws[f"B{current_index}"] = student.first_name
             ws[f"C{current_index}"] = student.paternal_name
-            ws[f"C{current_index}"] = "No"
+            ws[f"D{current_index}"] = student.maternal_name
+            ws[f"E{current_index}"] = "No"
             for attendance in all_attendances:
                 if attendance.date == datetime.date.today() \
                     and attendance.student.rut_without_digit \
                         == student.rut_without_digit:
-                    ws[f"C{current_index}"] = "Si"
+                    ws[f"E{current_index}"] = "Si"
                     break
             current_index += 1
-        wb.save(f"asistencia_{datetime.date.today()}.xlsx")
+        wb.save(
+            f"school/utils/temp/asistencia_{course.name}_{datetime.date.today()}.xlsx")
         # ENVIAR MAIL Y LUEGO BORRAR
-        # send_mail()
-        os.remove(f"asistencia_{datetime.date.today()}.xlsx")
+        email = EmailMessage(
+            'Asistencia ' + course.name + " " + str(datetime.date.today()),
+            'Estimado docente, \nAdjuntamos la asistencia del día de hoy para el curso ' + course.name + '. \nSaludos.', 'anka@kimche.ai', ['bamavrakis@uc.cl'])
+        email.attach_file(
+            'school/utils/temp/asistencia_' + course.name + '_' + str(datetime.date.today()) + '.xlsx')
+        email.send()
+        os.remove(
+            f"school/utils/temp/asistencia_{course.name}_{datetime.date.today()}.xlsx")
         return response.Response(status.HTTP_201_CREATED)
 
 

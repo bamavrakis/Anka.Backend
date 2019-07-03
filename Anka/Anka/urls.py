@@ -30,6 +30,8 @@ router.register(r'check_attendance', views.CheckAttendanceViewSet,
 router.register(r'create_entities', views.CreateEntitiesViewSet,
                 basename='create_entities')
 router.register(r'attendances', views.AttendanceViewSet)
+router.register(r'export_attendance',
+                views.ExportAttendanceViewSet, basename='export_attendance')
 
 
 # Wire up our API using automatic URL routing.
