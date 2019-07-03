@@ -142,16 +142,16 @@ class ExportAttendanceViewSet(viewsets.ModelViewSet):
                     break
             current_index += 1
         wb.save(
-            f"school/utils/temp/asistencia_{course.name}_{datetime.date.today()}.xlsx")
+            f"school/utils/temp/asistencia_{course.name.strip()}_{datetime.date.today()}.xlsx")
         # ENVIAR MAIL Y LUEGO BORRAR
         email = EmailMessage(
             'Asistencia ' + course.name + " " + str(datetime.date.today()),
             'Estimado docente, \nAdjuntamos la asistencia del día de hoy para el curso ' + course.name + '. \nSaludos.', 'anka@kimche.ai', ['bamavrakis@uc.cl'])
         email.attach_file(
-            'school/utils/temp/asistencia_' + course.name + '_' + str(datetime.date.today()) + '.xlsx')
+            'school/utils/temp/asistencia_' + course.name.strip() + '_' + str(datetime.date.today()) + '.xlsx')
         email.send()
         os.remove(
-            f"school/utils/temp/asistencia_{course.name}_{datetime.date.today()}.xlsx")
+            f"school/utils/temp/asistencia_{course.name.strip()}_{datetime.date.today()}.xlsx")
         return response.Response(status.HTTP_201_CREATED)
 
 

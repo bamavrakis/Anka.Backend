@@ -26,7 +26,7 @@ SECRET_KEY = '%j@bygd8m*9rr@nyd-====rozyv1@-jitpj6nd2cc6m#4q&dy='
 DEBUG = True
 
 ALLOWED_HOSTS = ['192.168.0.17', '127.0.0.1',
-                 '192.168.0.15', '0.0.0.0', '192.168.100.19']
+                 '192.168.0.15', '0.0.0.0', '192.168.100.19', '172.20.10.6']
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
