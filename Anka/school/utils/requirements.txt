@@ -19,7 +19,7 @@ numpy==1.14.6
 opencv-python==4.0.0.21
 openpyxl==2.6.2
 Pillow==5.4.1
-protobuf==3.8.0
+protobuf==3.15.0
 pycodestyle==2.5.0
 pyflakes==2.1.1
 requests==2.22.0
